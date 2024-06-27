@@ -14,9 +14,9 @@ COPY *.csproj ./
 ARG TARGET_VERSION
 RUN ~/.dotnet/dotnet publish -r linux-x64 --configuration Release -p:Version=$TARGET_VERSION --self-contained=true -p:PublishAot=true -p:StripSymbols=true -o build
 
-FROM scratch as output
+FROM scratch AS output
 COPY --from=build /App/build/VmChamp /VmChamp
 
-FROM build as release
+FROM build AS release
 COPY --from=build /App/build/VmChamp /VmChamp
 
