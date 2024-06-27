@@ -1,10 +1,12 @@
 FROM ubuntu:20.04 AS build
 WORKDIR /App
 
-# Install dependencies
-RUN apt-get update && apt-get install -y curl zlib1g-dev build-essential libicu-dev
+# Set variables to configure timezone non-interactively
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Etc/UTC
 
-# Install .NET
+RUN apt-get update && apt-get install -y curl zlib1g-dev build-essential libicu-dev tzdata
+
 RUN curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin -c 8.0
 
 COPY *.cs ./
