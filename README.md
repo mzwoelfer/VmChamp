@@ -13,40 +13,106 @@
 </div>
 
 ## ✨ Features
-
-- Create throwaway VMs on your local machine and connect via SSH in just a few seconds.
-- Fast and easy to use.
-- Fast boot times because by default uses minimal cloud images.
-- On demand download of latest Debian, Ubuntu, Arch, Fedora, CentOS and Alma cloud images.
+- Quickly create and SSH into throwaway VMs.
+- Fast boot times using minimal cloud images.
+- On-demand downloads for Debian, Ubuntu, Arch, Fedora, CentOS, and Alma cloud images.
 - Shell completion.
-- Customizable cloud-init commands if needed.
-- Uses KVM, QEMU and libvirt.
+- Customizable cloud-init commands.
+- Utilizes KVM, QEMU, and libvirt.
 
 ## 🤔 Why?
+**VmChamp creates local VMs in seconds and provides SSH access**, bypassing the lengthy manual VM setup process.
 
-Sometimes Docker containers are not sufficient for all use cases. For example when you want to load or unload kernel modules, test grub configs or doing low level networking stuff. Also when Systemd is needed to test unit files or install and test applications that require an init system. In this case a VM is often the better choice. Unfortunately it usually takes far too long to create a local VM for quick tests. Download ISO, create VM, run installer, network config, reboot, ssh login. This usually takes at least 5-15 minutes. VmChamp can create local VMs within seconds and then establish a network connection via SSH.
+Useful when Docker containers do not suffice, such as for:
+- loading/unloading kernel modules
+- testing grub configs
+- low-level networking tasks
+- testing/installing systemd unit files
+VMs are preferable.
+
 
 ## 🔧 Prerequisites
+- Your local Linux machine must support virtualization with KVM installed and working.
+- Ensure a default network interface is defined in libvirt, typically named "default."
 
-Your local linux machine needs to support virtualization and KVM must be installed and working.
-
-A default network interface defined in libvirt must be present. Usually it comes with one by default named "default". 
 If your default interface is not started (https://github.com/wubbl0rz/VmChamp/issues/3) try:
 
-```
+```BASH
 # use sudo if your user is not in the libvirt group
 virsh --connect qemu:///system net-start --network default
 virsh --connect qemu:///system net-autostart default
 ```
 
-## 🚀 Usage
+## 🛠️ Installation
+TESTED on: Ubuntu 22.04; Debian 12
 
-``` bash
+1. First, ensure that your system is up to date and install the required dependencies:
+```BASH
+sudo apt update
+sudo apt install qemu-kvm libvirt-daemon-system
+```
+
+2. Download and Install VmChamp:
+```BASH
+# Download the latest version of VmChamp:
+wget https://github.com/zwoefler/VmChamp/releases/latest/download/VmChamp -O VmChamp
+
+# Make the file executable:
+chmod +x VmChamp
+
+# Move VmChamp to your PATH:
+# Move to /usr/local/bin that's in your PATH.
+# Or rootless install ~/.local/bin:
+mkdir -p ~/.local/bin
+mv VmChamp ~/.local/bin/
+
+# Ensure ~/.local/bin is in your PATH by adding the following to your ~/.bashrc or ~/.zshrc:
+export PATH="$PATH:$HOME/.local/bin"
+
+# Reload your shell configuration:
+source ~/.bashrc  # or source ~/.zshrc if you're using Zsh
+
+# Run VmChamp:
+VmChamp
+```
+
+
+## 🚀 Usage
+```BASH
 VmChamp run mytestvm
 # or VmChamp run mytestvm --os debian11 --mem 256MB --disk 4GB
 ```
 
-<img src="https://user-images.githubusercontent.com/30373916/227714582-0338020d-6d84-4bd8-b3cd-a753cc19e3fa.png" width="700px">
+```BASH
+$ VmChamp run mytestvm
+️👉 Creating VM: mytestvm
+💻 Using OS: Debian12
+📔 Memory size: 512 MiB
+💽 Disk size: 8 GiB
+Download: https://cloud.debian.org/images/cloud/bookworm/latest/SHA512SUMS
+
+  100% 00:00:00
+
+Download: https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2
+
+  100% 00:00:00
+
+The checksum is good!
+
+⣷ Waiting for network...
+
+🚀 Your VM is ready.
+IP: 192.168.22.169
+Connect with 'VmChamp ssh user@192.168.22.169'
+Linux mytestvm 6.1.0-21-cloud-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+```
 
 For shell completion put this in your ~.zshrc:
 
@@ -54,11 +120,11 @@ For shell completion put this in your ~.zshrc:
 source <(VmChamp --completion zsh)
 ```
 
-```
+```BASH
 Description:
 
 Usage:
-  vmchamp [command] [options]
+  VmChamp [command] [options]
 
 Options:
   --completion <completion>  generate shell completion. (zsh or bash)
@@ -66,27 +132,30 @@ Options:
   -?, -h, --help             Show help and usage information
 
 Commands:
-  run, start <name>                      start a new VM [default: testvm]
-  clean                                  delete all vms and images
-  remove, rm <debiantestvm>              removes a vm [default: testvm]
-  reboot, reset, restart <debiantestvm>  force restarts a vm [default: testvm]
-  ssh <debiantestvm>                     connect to vm via ssh [default: testvm]
-  list, ls, ps                           list all existing vms
-  images, os                             get a list of all available os images
+  run, start <name>              start a new VM [default: testvm]
+  clean, purge                   delete all vms and images
+  vmc, vmclean, vpurge           delete all vms without images
+  remove, rm <name>              removes a vm [default: testvm]
+  reboot, reset, restart <name>  force restarts a vm [default: testvm]
+  ssh <name>                     connect to vm via ssh [default: testvm]
+  list, ls, ps                   list all existing vms
+  images, os                     get a list of all available os images
 ```
 
 ## 🏗️ Build
 
-Simply use the included bash script as follows:
+To build **VmChamp**, use the the included bash script:
 
-```bash
+```BASH
 ./build.sh <version> <output dir>
 ```
 
 For example:
 
-```bash
+```BASH
 ./build.sh 1.2.3 ~/build/
 ```
 
 Output dir defaults to `./build/`.
+
+
