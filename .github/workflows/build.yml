@@ -28,9 +28,13 @@ jobs:
         name: VmChamp-linux-${{ github.ref_name }}-amd64
         path: /tmp/out/VmChamp
         retention-days: 1
+
+  release:
+    needs: build
+    steps:
     - name: Release
-      uses: softprops/action-gh-release@v2
-      with:
-        files: /tmp/out/VmChamp
-        body: |
-          ${{ github.event.head_commit.message }}
+          uses: softprops/action-gh-release@v2
+          with:
+            files: /tmp/out/VmChamp
+            body: |
+              ${{ github.event.head_commit.message }}
