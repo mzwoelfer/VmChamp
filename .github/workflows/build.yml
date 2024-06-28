@@ -31,6 +31,6 @@ jobs:
     - name: Release
       uses: softprops/action-gh-release@v2
       with:
-        files: /tmp/out/VmChamp-linux-${{ github.ref_name }}-amd64
+        files: VmChamp-linux-${{ github.ref_name }}-amd64
         body: |
           ${{ github.event.head_commit.message }}
