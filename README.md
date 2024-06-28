@@ -13,18 +13,24 @@
 </div>
 
 ## ✨ Features
-
-- Create throwaway VMs on your local machine and connect via SSH in just a few seconds.
-- Fast and easy to use.
-- Fast boot times because by default uses minimal cloud images.
-- On demand download of latest Debian, Ubuntu, Arch, Fedora, CentOS and Alma cloud images.
+- Quickly create and SSH into throwaway VMs.
+- Fast boot times using minimal cloud images.
+- On-demand downloads for Debian, Ubuntu, Arch, Fedora, CentOS, and Alma cloud images.
 - Shell completion.
-- Customizable cloud-init commands if needed.
-- Uses KVM, QEMU and libvirt.
+- Customizable cloud-init commands.
+- Utilizes KVM, QEMU, and libvirt.
+
 
 ## 🤔 Why?
+**VmChamp creates local VMs in seconds and provides SSH access**, bypassing the lengthy traditional VM setup process.
 
-Sometimes Docker containers are not sufficient for all use cases. For example when you want to load or unload kernel modules, test grub configs or doing low level networking stuff. Also when Systemd is needed to test unit files or install and test applications that require an init system. In this case a VM is often the better choice. Unfortunately it usually takes far too long to create a local VM for quick tests. Download ISO, create VM, run installer, network config, reboot, ssh login. This usually takes at least 5-15 minutes. VmChamp can create local VMs within seconds and then establish a network connection via SSH.
+Useful when Docker containers do not suffice, such as for:
+- loading/unloading kernel modules
+- testing grub configs
+- low-level networking tasks
+- testing/installing systemd unit files
+VMs are preferable.
+
 
 ## 🔧 Prerequisites
 
