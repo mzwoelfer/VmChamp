@@ -76,6 +76,16 @@ public class DistroInfo
     },
     new()
     {
+      Name = "Ubuntu2404",
+      Family = "Ubuntu",
+      ImageName = "noble-server-cloudimg-amd64.img",
+      Url = "https://cloud-images.ubuntu.com/noble/current/",
+      Aliases = new[] { "Noble Numbat", "Noble" },
+      ChecksumFile = "SHA256SUMS",
+      ChecksumType = "sha256"
+    },
+    new()
+    {
       Name = "Arch",
       Family = "Arch",
       ImageName = "Arch-Linux-x86_64-cloudimg.qcow2",
