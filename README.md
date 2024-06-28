@@ -20,9 +20,8 @@
 - Customizable cloud-init commands.
 - Utilizes KVM, QEMU, and libvirt.
 
-
 ## 🤔 Why?
-**VmChamp creates local VMs in seconds and provides SSH access**, bypassing the lengthy traditional VM setup process.
+**VmChamp creates local VMs in seconds and provides SSH access**, bypassing the lengthy manual VM setup process.
 
 Useful when Docker containers do not suffice, such as for:
 - loading/unloading kernel modules
@@ -33,7 +32,6 @@ VMs are preferable.
 
 
 ## 🔧 Prerequisites
-
 - Your local Linux machine must support virtualization with KVM installed and working.
 - Ensure a default network interface is defined in libvirt, typically named "default."
 
@@ -45,15 +43,48 @@ virsh --connect qemu:///system net-start --network default
 virsh --connect qemu:///system net-autostart default
 ```
 
-## 🚀 Usage
+## 🛠️ Installation
+TESTED on: Ubuntu 22.04; Debian 12
 
+1. First, ensure that your system is up to date and install the required dependencies:
+```BASH
+sudo apt update
+sudo apt install qemu-kvm libvirt-daemon-system
+```
+
+2. Download and Install VmChamp:
+```BASH
+# Download the latest version of VmChamp:
+wget https://github.com/zwoefler/VmChamp/releases/latest/download/VmChamp -O VmChamp
+
+# Make the file executable:
+chmod +x VmChamp
+
+# Move VmChamp to your PATH:
+# Move to /usr/local/bin that's in your PATH.
+# Or rootless install ~/.local/bin:
+mkdir -p ~/.local/bin
+mv VmChamp ~/.local/bin/
+
+# Ensure ~/.local/bin is in your PATH by adding the following to your ~/.bashrc or ~/.zshrc:
+export PATH="$PATH:$HOME/.local/bin"
+
+# Reload your shell configuration:
+source ~/.bashrc  # or source ~/.zshrc if you're using Zsh
+
+# Run VmChamp:
+VmChamp
+```
+
+
+## 🚀 Usage
 ```BASH
 VmChamp run mytestvm
 # or VmChamp run mytestvm --os debian11 --mem 256MB --disk 4GB
 ```
 
 ```BASH
-$ vmchamp run mytestvm
+$ VmChamp run mytestvm
 ️👉 Creating VM: mytestvm
 💻 Using OS: Debian12
 📔 Memory size: 512 MiB
@@ -126,3 +157,5 @@ For example:
 ```
 
 Output dir defaults to `./build/`.
+
+
