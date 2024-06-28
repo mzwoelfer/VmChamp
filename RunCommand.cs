@@ -106,18 +106,29 @@ public class RunCommand : Command
         if (!Helper.CheckDefaultNetwork())
           return;
 
-        var distro = localImagePath is null ? 
-          this.GetDistro(os) : 
-          DistroInfo.CreateLocal(new FileInfo(localImagePath));
+        DistroInfo distro;
+        if (localImagePath is null)
+        {
+          distro = this.GetDistro(os);
+          if (distro == null)
+          {
+            AnsiConsole.WriteLine($"OS: {os} not found.");
+            return;
+          }
+        }
+        else
+        {
+          var localImageFileInfo = new FileInfo(localImagePath);
+          if (!localImageFileInfo.Exists)
+          {
+            AnsiConsole.WriteLine($"[red]Error: Local image '{localImagePath}' not found.[/]");
+            return;
+          }
+          distro = DistroInfo.CreateLocal(localImageFileInfo);
+        }
 
         var diskSize = ByteSize.Parse(disk);
         var memSize = ByteSize.Parse(mem);
-
-        if (distro == null)
-        {
-          AnsiConsole.WriteLine($"OS: {os} not found.");
-          return;
-        }
 
         AnsiConsole.MarkupLine($"️👉 Creating VM: {vmName}");
         AnsiConsole.MarkupLine($"💻 Using OS: {distro.Name}");
@@ -140,9 +151,17 @@ public class RunCommand : Command
 
         Directory.CreateDirectory(vmDir);
 
-        var sourceOsImage = await this._downloader.DownloadAsync(distro);
-        var targetOsImage = Path.Combine(vmDir, sourceOsImage.Name);
-        sourceOsImage.CopyTo(targetOsImage);
+        string targetOsImage;
+        if (localImagePath is null)
+        {
+          var sourceOsImage = await this._downloader.DownloadAsync(distro);
+          targetOsImage = Path.Combine(vmDir, sourceOsImage.Name);
+          sourceOsImage.CopyTo(targetOsImage);
+        }
+        else
+        {
+          targetOsImage = localImagePath;
+        }
 
         Helper.ResizeImage(targetOsImage, diskSize.Bytes);
 
@@ -182,14 +201,14 @@ public class RunCommand : Command
       AnsiConsole.MarkupLine($"[red]Error while creating: {vmName}[/]");
       return;
     }
-    
+
     string? vmIp = null;
 
     if (background)
     {
       return;
     }
-  
+
     await AnsiConsole.Progress()
       .Columns(new SpinnerColumn(), new TaskDescriptionColumn())
       .StartAsync(async ctx =>
@@ -197,14 +216,14 @@ public class RunCommand : Command
         ctx.AddTask($"Waiting for network...");
 
         var src = new CancellationTokenSource(TimeSpan.FromSeconds(90));
-      
+
         do
         {
           await Task.Delay(1000);
           vmIp = Interop.GetFirstIpById(vmId);
         } while (vmIp == null && !src.IsCancellationRequested);
       });
-    
+
     if (vmIp == null)
     {
       AnsiConsole.WriteLine("🤔 No network found. Maybe your VM takes too long to boot or network is not ready?");
