@@ -52,7 +52,36 @@ VmChamp run mytestvm
 # or VmChamp run mytestvm --os debian11 --mem 256MB --disk 4GB
 ```
 
-<img src="https://user-images.githubusercontent.com/30373916/227714582-0338020d-6d84-4bd8-b3cd-a753cc19e3fa.png" width="700px">
+```BASH
+$ vmchamp run mytestvm
+️👉 Creating VM: mytestvm
+💻 Using OS: Debian12
+📔 Memory size: 512 MiB
+💽 Disk size: 8 GiB
+Download: https://cloud.debian.org/images/cloud/bookworm/latest/SHA512SUMS
+
+  100% 00:00:00
+
+Download: https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2
+
+  100% 00:00:00
+
+The checksum is good!
+
+⣷ Waiting for network...
+
+🚀 Your VM is ready.
+IP: 192.168.22.169
+Connect with 'VmChamp ssh user@192.168.22.169'
+Linux mytestvm 6.1.0-21-cloud-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+```
 
 For shell completion put this in your ~.zshrc:
 
@@ -60,11 +89,11 @@ For shell completion put this in your ~.zshrc:
 source <(VmChamp --completion zsh)
 ```
 
-```
+```BASH
 Description:
 
 Usage:
-  vmchamp [command] [options]
+  VmChamp [command] [options]
 
 Options:
   --completion <completion>  generate shell completion. (zsh or bash)
@@ -72,14 +101,14 @@ Options:
   -?, -h, --help             Show help and usage information
 
 Commands:
-  run, start <name>                start a new VM [default: testvm]
-  clean, purge                     delete all vms and images
-  vmc, vmclean, vpurge             delete all vms without images
-  remove, rm <dadnnn>              removes a vm [default: testvm]
-  reboot, reset, restart <dadnnn>  force restarts a vm [default: testvm]
-  ssh <dadnnn>                     connect to vm via ssh [default: testvm]
-  list, ls, ps                     list all existing vms
-  images, os                       get a list of all available os images
+  run, start <name>              start a new VM [default: testvm]
+  clean, purge                   delete all vms and images
+  vmc, vmclean, vpurge           delete all vms without images
+  remove, rm <name>              removes a vm [default: testvm]
+  reboot, reset, restart <name>  force restarts a vm [default: testvm]
+  ssh <name>                     connect to vm via ssh [default: testvm]
+  list, ls, ps                   list all existing vms
+  images, os                     get a list of all available os images
 ```
 
 ## 🏗️ Build
