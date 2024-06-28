@@ -47,7 +47,7 @@ virsh --connect qemu:///system net-autostart default
 
 ## 🚀 Usage
 
-``` bash
+```BASH
 VmChamp run mytestvm
 # or VmChamp run mytestvm --os debian11 --mem 256MB --disk 4GB
 ```
@@ -84,15 +84,15 @@ Commands:
 
 ## 🏗️ Build
 
-Simply use the included bash script as follows:
+To build **VmChamp**, use the the included bash script:
 
-```bash
+```BASH
 ./build.sh <version> <output dir>
 ```
 
 For example:
 
-```bash
+```BASH
 ./build.sh 1.2.3 ~/build/
 ```
 
