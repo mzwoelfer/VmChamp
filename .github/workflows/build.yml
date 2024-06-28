@@ -21,6 +21,7 @@ jobs:
         TAG_NAME="${{ github.ref_name }}"
         TARGET_VERSION="${TAG_NAME#v}"
         ./build.sh "$TARGET_VERSION" /tmp/out
+        cp /tmp/out/VmChamp /tmp/out/VmChamp-linux-${{ github.ref_name }}-amd64
 
     - name: Upload Release Artifact
       uses: actions/upload-artifact@v4
