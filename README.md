@@ -34,12 +34,12 @@ VMs are preferable.
 
 ## 🔧 Prerequisites
 
-Your local linux machine needs to support virtualization and KVM must be installed and working.
+- Your local Linux machine must support virtualization with KVM installed and working.
+- Ensure a default network interface is defined in libvirt, typically named "default."
 
-A default network interface defined in libvirt must be present. Usually it comes with one by default named "default".
 If your default interface is not started (https://github.com/wubbl0rz/VmChamp/issues/3) try:
 
-```
+```BASH
 # use sudo if your user is not in the libvirt group
 virsh --connect qemu:///system net-start --network default
 virsh --connect qemu:///system net-autostart default
