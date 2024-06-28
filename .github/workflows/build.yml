@@ -26,12 +26,12 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: VmChamp-linux-${{ github.ref_name }}-amd64
-        path: /tmp/out/VmChamp
+        path: /tmp/out/VmChamp-linux-${{ github.ref_name }}-amd64
         retention-days: 1
 
     - name: Release
       uses: softprops/action-gh-release@v2
       with:
-        files: /tmp/out/VmChamp
+        files: /tmp/out/VmChamp-linux-${{ github.ref_name }}-amd64
         body: |
           ${{ github.event.head_commit.message }}
