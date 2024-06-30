@@ -54,7 +54,7 @@ sudo apt install qemu-kvm libvirt-daemon-system
 2. Download and Install VmChamp:
 ```BASH
 # Download the latest version of VmChamp:
-wget https://github.com/zwoefler/VmChamp/releases/latest/download/VmChamp -O VmChamp
+wget -qO- https://api.github.com/repos/zwoefler/VmChamp/releases/latest | grep "browser_download_url" | cut -d '"' -f 4 | wget -i - -O VmChamp
 
 # Make the file executable:
 chmod +x VmChamp
