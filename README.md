@@ -78,12 +78,12 @@ vmchamp
 
 ## 🚀 Usage
 ```BASH
-VmChamp run mytestvm
+vmchamp run mytestvm
 # or VmChamp run mytestvm --os debian11 --mem 256MB --disk 4GB
 ```
 
 ```BASH
-$ VmChamp run mytestvm
+$ vmchamp run mytestvm
 ️👉 Creating VM: mytestvm
 💻 Using OS: Debian12
 📔 Memory size: 512 MiB
