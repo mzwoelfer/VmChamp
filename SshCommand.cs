@@ -16,12 +16,7 @@ public class SshCommand : Command
       () => appConfig.DefaultVmName,
       "Name of the new VM");
 
-    Option<string> userOption = new("--user",
-      () => appConfig.DefaultUser,
-      "Name of the User");
-
     this.AddArgument(nameArgument);
-    this.AddOption(userOption);
 
     nameArgument.AddCompletions((ctx) =>
       Helper.GetAllVmInDirectory(_appConfig.DataDir)
@@ -31,9 +26,20 @@ public class SshCommand : Command
       Helper.GetAllVmInDirectory(_appConfig.DataDir)
         .Select(vmName => new CompletionItem(vmName ?? "")));
 
-    this.SetHandler((vmName, user) =>
+    this.SetHandler((vmName) =>
     {
+      var user = _appConfig.DefaultUser;
+
+      var vmDir = Path.Combine(_appConfig.DataDir, vmName);
+      var userFromIso = Helper.GetUserFromIso(vmDir);
+
+      if (userFromIso != "N/A" && userFromIso != _appConfig.DefaultUser)
+      {
+          user = userFromIso;
+      }
+
       AnsiConsole.MarkupLine($"✈️ Connect to: {vmName}. USER: {user}");
+
       using var libvirtConnection = LibvirtConnection.CreateForSession();
 
       var vmId = Interop.virDomainLookupByName(libvirtConnection.NativePtr, vmName);
@@ -46,6 +52,6 @@ public class SshCommand : Command
       }
 
       Helper.ConnectViaSsh(user, vmIp)?.WaitForExit();
-    }, nameArgument, userOption);
+    }, nameArgument);
   }
 }
