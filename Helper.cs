@@ -2,6 +2,8 @@ using System.Diagnostics;
 using System.IO.Pipes;
 using System.Net.NetworkInformation;
 using Spectre.Console;
+using System.Text.RegularExpressions;
+
 
 namespace VmChamp;
 
@@ -130,4 +132,32 @@ public class Helper
     Directory.GetDirectories(path)
       .Select(Path.GetFileName)
       .ToArray();
+
+  public static string GetUserFromIso(string vmDir)
+    {
+        var isoPath = Path.Combine(vmDir, "cloudInit.iso");
+        if (!File.Exists(isoPath))
+        {
+            return "N/A";
+        }
+
+        try
+        {
+            var content = File.ReadAllText(isoPath);
+            var userPattern = new Regex(@"^\s*- name\s*:\s*(\w+)", RegexOptions.Multiline);
+            var match = userPattern.Match(content);
+
+            if (match.Success)
+            {
+                return match.Groups[1].Value;
+            }
+
+            return "N/A";
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error reading user from ISO: {ex.Message}");
+            return "N/A";
+        }
+    }
 }

@@ -13,16 +13,17 @@ public class ListCommand : Command
     _appConfig = appConfig;
 
     var allVmDirectories = Directory.GetDirectories(appConfig.DataDir);
-    
+
     this.AddAlias("ps");
     this.AddAlias("ls");
-    
+
     this.SetHandler(() =>
     {
       using var libvirtConnection = LibvirtConnection.CreateForSession();
-      
+
       var table = new Table();
       table.AddColumn("VM");
+      table.AddColumn("User");
       table.AddColumn("IP");
       table.AddColumn("State");
       table.AddColumn("Memory");
@@ -35,9 +36,10 @@ public class ListCommand : Command
         var vmId = Interop.virDomainLookupByName(libvirtConnection.NativePtr, vmName);
 
         var pinger = new Ping();
-        
+
         unsafe
         {
+          var user = Helper.GetUserFromIso(vmDir);
           var vmIpAddress = Interop.GetFirstIpById(vmId);
           var stateInfo = new VirDomainInfo();
           var blockInfo = new VirDomainBlockInfo();
@@ -66,6 +68,7 @@ public class ListCommand : Command
           var maxDiskSize = ByteSize.FromBytes(blockInfo.capacity);
 
           table.AddRow(vmName,
+            user,
             $"{pingAlive}{(vmIpAddress ?? "none")}[/]",
             $"{color}{state}[/]",
             $"{curMemSize:MiB}",
@@ -73,7 +76,7 @@ public class ListCommand : Command
             stateInfo.nrVirtCpu.ToString());
         }
       }
-  
+
       AnsiConsole.Write(table);
     });
   }
