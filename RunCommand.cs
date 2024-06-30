@@ -1,4 +1,5 @@
 using System.CommandLine;
+using System.CommandLine.Invocation;
 using System.CommandLine.Completions;
 using System.Diagnostics;
 using ByteSizeLib;
@@ -33,6 +34,10 @@ public class RunCommand : Command
       () => appConfig.DefaultVmDistro,
       "The operating system image to use.");
 
+    var userOption = new Option<string>("--user",
+      () => appConfig.DefaultUser,
+      "Default user on VM.");
+
     var localImageOption = new Option<string?>("--local-image",
       "Provide your own local image in .qcow2 format.");
 
@@ -47,6 +52,9 @@ public class RunCommand : Command
     var nameArgument = new Argument<string>("name",
       () => appConfig.DefaultVmName,
       "Name of the new VM");
+
+
+
 
     osOption.AddCompletions((ctx) =>
       DistroInfo.Distros.Select(distro => new CompletionItem(distro.Name)));
@@ -90,19 +98,23 @@ public class RunCommand : Command
     this.AddOption(memOption);
     this.AddOption(diskOption);
     this.AddOption(cpuOption);
+    this.AddOption(userOption);
     this.AddOption(backgroundOption);
     this.AddOption(localImageOption);
     this.AddOption(customCmdOption);
 
-    this.SetHandler(async (os,
-        background,
-        vmName,
-        mem,
-        disk,
-        cpuCount,
-        localImagePath,
-        customCmd) =>
+    this.SetHandler(async (InvocationContext context) =>
       {
+        var vmName = context.ParseResult.GetValueForArgument(nameArgument);
+        var os = context.ParseResult.GetValueForOption(osOption);
+        var background = context.ParseResult.GetValueForOption(backgroundOption);
+        var mem = context.ParseResult.GetValueForOption(memOption);
+        var disk = context.ParseResult.GetValueForOption(diskOption);
+        var cpuCount = context.ParseResult.GetValueForOption(cpuOption);
+        var user = context.ParseResult.GetValueForOption(userOption);
+        var localImagePath = context.ParseResult.GetValueForOption(localImageOption);
+        var customCmd = context.ParseResult.GetValueForOption(customCmdOption);
+
         if (!Helper.CheckDefaultNetwork())
           return;
 
@@ -165,18 +177,10 @@ public class RunCommand : Command
 
         Helper.ResizeImage(targetOsImage, diskSize.Bytes);
 
-        var initImage = _imager.CreateImage(vmName, new DirectoryInfo(vmDir), customCmd ?? "");
+        var initImage = _imager.CreateImage(vmName, user, new DirectoryInfo(vmDir), customCmd ?? "");
 
-        await this.CreateVm(vmName, new FileInfo(targetOsImage), initImage, background, memSize.Bytes, cpuCount);
-      },
-      osOption,
-      backgroundOption,
-      nameArgument,
-      memOption,
-      diskOption,
-      cpuOption,
-      localImageOption,
-      customCmdOption);
+        await this.CreateVm(vmName, user, new FileInfo(targetOsImage), initImage, background, memSize.Bytes, cpuCount);
+      });
   }
 
   private DistroInfo? GetDistro(string name) =>
@@ -184,6 +188,7 @@ public class RunCommand : Command
       .FirstOrDefault(distro => distro.Name.ToLower() == name.ToLower());
 
   private async Task CreateVm(string vmName,
+    string user,
     FileInfo osImage,
     FileInfo initImage,
     bool background,
@@ -232,9 +237,9 @@ public class RunCommand : Command
 
     AnsiConsole.WriteLine("🚀 Your VM is ready.");
     AnsiConsole.WriteLine($"IP: {vmIp}");
-    AnsiConsole.WriteLine($"Connect with 'VmChamp ssh {_appConfig.DefaultUser}@{vmIp}'");
+    AnsiConsole.WriteLine($"Connect with 'VmChamp ssh {user}@{vmIp}'");
 
-    Helper.ConnectViaSsh(_appConfig.DefaultUser, vmIp)?.WaitForExit();
+    Helper.ConnectViaSsh(user, vmIp)?.WaitForExit();
   }
 
   private void RemoveVm(string vmName, string vmDir)

@@ -19,7 +19,7 @@ public class IsoImager
     return keys;
   }
 
-  public FileInfo CreateImage(string hostname, DirectoryInfo outputDirectory, string customCmd = "")
+  public FileInfo CreateImage(string hostname, string user, DirectoryInfo outputDirectory, string customCmd = "")
   {
     var keys = "[" + string.Join(",", this.FindSshKeys().Select(key => $"\"{key.Trim()}\"")) + "]";
 
@@ -35,7 +35,7 @@ public class IsoImager
       hostname: {hostname}
       users:
           - default
-          - name: user
+          - name: {user}
             groups: ['sudo']
             shell: /bin/bash
             sudo: ALL=(ALL) NOPASSWD:ALL
@@ -66,9 +66,9 @@ public class IsoImager
     builder.AddFile(@"meta-data", Encoding.UTF8.GetBytes(metaData));
 
     var outputFile = Path.Combine(outputDirectory.FullName, "cloudInit.iso");
-    
+
     builder.Build(outputFile);
-    
+
     return new FileInfo(outputFile);
   }
 }
