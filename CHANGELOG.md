@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.2.0 - 2024-06-30
+FIX: VmChamp SSH uses correct user to connect to machine
+
+- Added: Check if user is not default, read from cloudInit.iso file
+- Removed: --user option for SSHCommand
+
+
 ## v0.1.0 - 2024-06-30
 FEATURE: Added `--user` flag to VM-Creation and SSH command.
 
