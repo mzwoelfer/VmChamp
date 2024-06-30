@@ -1,4 +1,5 @@
 using System.CommandLine;
+using System.CommandLine.Invocation;
 using System.CommandLine.Completions;
 using System.Diagnostics;
 using ByteSizeLib;
@@ -48,6 +49,9 @@ public class RunCommand : Command
       () => appConfig.DefaultVmName,
       "Name of the new VM");
 
+
+
+
     osOption.AddCompletions((ctx) =>
       DistroInfo.Distros.Select(distro => new CompletionItem(distro.Name)));
 
@@ -94,15 +98,17 @@ public class RunCommand : Command
     this.AddOption(localImageOption);
     this.AddOption(customCmdOption);
 
-    this.SetHandler(async (os,
-        background,
-        vmName,
-        mem,
-        disk,
-        cpuCount,
-        localImagePath,
-        customCmd) =>
+    this.SetHandler(async (InvocationContext context) =>
       {
+        var vmName = context.ParseResult.GetValueForArgument(nameArgument);
+        var os = context.ParseResult.GetValueForOption(osOption);
+        var background = context.ParseResult.GetValueForOption(backgroundOption);
+        var mem = context.ParseResult.GetValueForOption(memOption);
+        var disk = context.ParseResult.GetValueForOption(diskOption);
+        var cpuCount = context.ParseResult.GetValueForOption(cpuOption);
+        var localImagePath = context.ParseResult.GetValueForOption(localImageOption);
+        var customCmd = context.ParseResult.GetValueForOption(customCmdOption);
+
         if (!Helper.CheckDefaultNetwork())
           return;
 
@@ -168,15 +174,7 @@ public class RunCommand : Command
         var initImage = _imager.CreateImage(vmName, new DirectoryInfo(vmDir), customCmd ?? "");
 
         await this.CreateVm(vmName, new FileInfo(targetOsImage), initImage, background, memSize.Bytes, cpuCount);
-      },
-      osOption,
-      backgroundOption,
-      nameArgument,
-      memOption,
-      diskOption,
-      cpuOption,
-      localImageOption,
-      customCmdOption);
+      });
   }
 
   private DistroInfo? GetDistro(string name) =>
