@@ -34,6 +34,10 @@ public class RunCommand : Command
       () => appConfig.DefaultVmDistro,
       "The operating system image to use.");
 
+    var userOption = new Option<string>("--user",
+      () => appConfig.DefaultUser,
+      "Default user on VM.");
+
     var localImageOption = new Option<string?>("--local-image",
       "Provide your own local image in .qcow2 format.");
 
@@ -94,6 +98,7 @@ public class RunCommand : Command
     this.AddOption(memOption);
     this.AddOption(diskOption);
     this.AddOption(cpuOption);
+    this.AddOption(userOption);
     this.AddOption(backgroundOption);
     this.AddOption(localImageOption);
     this.AddOption(customCmdOption);
@@ -106,6 +111,7 @@ public class RunCommand : Command
         var mem = context.ParseResult.GetValueForOption(memOption);
         var disk = context.ParseResult.GetValueForOption(diskOption);
         var cpuCount = context.ParseResult.GetValueForOption(cpuOption);
+        var user = context.ParseResult.GetValueForOption(userOption);
         var localImagePath = context.ParseResult.GetValueForOption(localImageOption);
         var customCmd = context.ParseResult.GetValueForOption(customCmdOption);
 
@@ -171,9 +177,9 @@ public class RunCommand : Command
 
         Helper.ResizeImage(targetOsImage, diskSize.Bytes);
 
-        var initImage = _imager.CreateImage(vmName, new DirectoryInfo(vmDir), customCmd ?? "");
+        var initImage = _imager.CreateImage(vmName, user, new DirectoryInfo(vmDir), customCmd ?? "");
 
-        await this.CreateVm(vmName, new FileInfo(targetOsImage), initImage, background, memSize.Bytes, cpuCount);
+        await this.CreateVm(vmName, user, new FileInfo(targetOsImage), initImage, background, memSize.Bytes, cpuCount);
       });
   }
 
@@ -182,6 +188,7 @@ public class RunCommand : Command
       .FirstOrDefault(distro => distro.Name.ToLower() == name.ToLower());
 
   private async Task CreateVm(string vmName,
+    string user,
     FileInfo osImage,
     FileInfo initImage,
     bool background,
@@ -230,9 +237,9 @@ public class RunCommand : Command
 
     AnsiConsole.WriteLine("🚀 Your VM is ready.");
     AnsiConsole.WriteLine($"IP: {vmIp}");
-    AnsiConsole.WriteLine($"Connect with 'VmChamp ssh {_appConfig.DefaultUser}@{vmIp}'");
+    AnsiConsole.WriteLine($"Connect with 'VmChamp ssh {user}@{vmIp}'");
 
-    Helper.ConnectViaSsh(_appConfig.DefaultUser, vmIp)?.WaitForExit();
+    Helper.ConnectViaSsh(user, vmIp)?.WaitForExit();
   }
 
   private void RemoveVm(string vmName, string vmDir)
