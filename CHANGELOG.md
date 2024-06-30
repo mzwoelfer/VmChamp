@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.1.0 - 2024-06-30
+FEATURE: Added `--user` flag to VM-Creation and SSH command.
+
+- Updated VM creation: Includes user option, with default user if not specified.
+- Updated SSH command: Includes user option, with default user if not specified.
+- Refactored command handlers to accommodate more than 8 options using `InvocationContext`.
+
+
 ## v0.0.5 - 2023-04-07
 
 - ask to create bridge if virbr0 is not found or not ready
