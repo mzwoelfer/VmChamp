@@ -54,16 +54,16 @@ sudo apt install qemu-kvm libvirt-daemon-system
 2. Download and Install VmChamp:
 ```BASH
 # Download the latest version of VmChamp:
-wget https://github.com/zwoefler/VmChamp/releases/latest/download/VmChamp -O VmChamp
+wget -qO- https://api.github.com/repos/zwoefler/VmChamp/releases/latest | grep "browser_download_url" | cut -d '"' -f 4 | wget -i - -O vmchamp
 
 # Make the file executable:
-chmod +x VmChamp
+chmod +x vmchamp
 
 # Move VmChamp to your PATH:
 # Move to /usr/local/bin that's in your PATH.
 # Or rootless install ~/.local/bin:
 mkdir -p ~/.local/bin
-mv VmChamp ~/.local/bin/
+mv vmchamp ~/.local/bin/
 
 # Ensure ~/.local/bin is in your PATH by adding the following to your ~/.bashrc or ~/.zshrc:
 export PATH="$PATH:$HOME/.local/bin"
@@ -72,18 +72,18 @@ export PATH="$PATH:$HOME/.local/bin"
 source ~/.bashrc  # or source ~/.zshrc if you're using Zsh
 
 # Run VmChamp:
-VmChamp
+vmchamp
 ```
 
 
 ## 🚀 Usage
 ```BASH
-VmChamp run mytestvm
+vmchamp run mytestvm
 # or VmChamp run mytestvm --os debian11 --mem 256MB --disk 4GB
 ```
 
 ```BASH
-$ VmChamp run mytestvm
+$ vmchamp run mytestvm
 ️👉 Creating VM: mytestvm
 💻 Using OS: Debian12
 📔 Memory size: 512 MiB
