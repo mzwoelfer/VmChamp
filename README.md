@@ -8,7 +8,7 @@
     <a target="_blank" href="https://github.com/zwoefler/VmChamp/actions"><img src="https://img.shields.io/github/actions/workflow/status/zwoefler/VmChamp/build.yml" /></a>
     <a target="_blank" href="https://github.com/wubbl0rz/VmChamp/stargazers"><img src="https://img.shields.io/github/stars/wubbl0rz/VmChamp" /></a>
     <a target="_blank" href="https://github.com/zwoefler/VmChamp/releases"><img src="https://img.shields.io/github/v/release/zwoefler/VmChamp?display_name=tag" /></a>
-    <a target="_blank" href="https://github.com/wubbl0rz/VmChamp/commits/master"><img src="https://img.shields.io/github/last-commit/wubbl0rz/VmChamp" /></a>
+    <a target="_blank" href="https://github.com/zwoefler/VmChamp/commits/master"><img src="https://img.shields.io/github/last-commit/zwoefler/VmChamp" /></a>
 </div>
 
 ## ✨ Features
