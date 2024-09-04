@@ -14,10 +14,9 @@
 ## ✨ Features
 - Quickly create and SSH into throwaway VMs.
 - Fast boot times using minimal cloud images.
-- On-demand downloads for Debian, Ubuntu, Arch, Fedora, CentOS, and Alma cloud images.
-- Shell completion.
+- On-demand downloads for `Debian`, `Ubuntu`, `Arch`, `Fedora`, `CentOS`, `Rocky` and `Alma` cloud images.
 - Customizable cloud-init commands.
-- Utilizes KVM, QEMU, and libvirt.
+- Utilizes `KVM`, `QEMU`, and `libvirt`.
 
 ## 🤔 Why?
 **VmChamp creates local VMs in seconds and provides SSH access**, bypassing the lengthy manual VM setup process.
