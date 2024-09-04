@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.2.1 - 2024-09-04
+UPDATE: Added Fedora 38, 39 and 40 to VmChamp
+
+
 ## v0.2.0 - 2024-06-30
 FIX: VmChamp SSH uses correct user to connect to machine
 

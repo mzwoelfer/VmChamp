@@ -116,6 +116,36 @@ public class DistroInfo
     },
     new()
     {
+      Name = "Fedora38",
+      Family = "Fedora",
+      ImageName = "Fedora-Cloud-Base-38-1.6.x86_64.qcow2",
+      Url = "https://download.fedoraproject.org/pub/fedora/linux/releases/38/Cloud/x86_64/images/",
+      Aliases = Array.Empty<string>(),
+      ChecksumFile = "Fedora-Cloud-38-1.6-x86_64-CHECKSUM",
+      ChecksumType = "sha256"
+    },
+    new()
+    {
+      Name = "Fedora39",
+      Family = "Fedora",
+      ImageName = "Fedora-Cloud-Base-39-1.5.x86_64.qcow2",
+      Url = "https://download.fedoraproject.org/pub/fedora/linux/releases/39/Cloud/x86_64/images/",
+      Aliases = Array.Empty<string>(),
+      ChecksumFile = "Fedora-Cloud-39-1.5-x86_64-CHECKSUM",
+      ChecksumType = "sha256"
+    },
+    new()
+    {
+      Name = "Fedora40",
+      Family = "Fedora",
+      ImageName = "Fedora-Cloud-Base-Generic.x86_64-40-1.14.qcow2",
+      Url = "https://download.fedoraproject.org/pub/fedora/linux/releases/40/Cloud/x86_64/images/",
+      Aliases = Array.Empty<string>(),
+      ChecksumFile = "Fedora-Cloud-40-1.14-x86_64-CHECKSUM",
+      ChecksumType = "sha256"
+    },
+    new()
+    {
       Name = "CentOS7",
       Family = "RHEL",
       ImageName = "CentOS-7-x86_64-GenericCloud.qcow2",
