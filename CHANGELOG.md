@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.3.2 - 2024-09-04
+FIX: Bash completion output
+
+
 ## v0.3.1 - 2024-09-04
 FEATURE: Added Docs and FAQ
 
