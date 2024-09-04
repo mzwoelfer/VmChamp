@@ -19,14 +19,10 @@
 - Utilizes `KVM`, `QEMU`, and `libvirt`.
 
 ## 🤔 Why?
-**VmChamp creates local VMs in seconds and provides SSH access**, bypassing the lengthy manual VM setup process.
+`VmChamp` creates local VMs `in seconds` and provides SSH access.
 
-Useful when Docker containers do not suffice, such as for:
-- loading/unloading kernel modules
-- testing grub configs
-- low-level networking tasks
-- testing/installing systemd unit files
-VMs are preferable.
+Bypassing a lengthy manual VM setup process.
+Especially useful when Containers do not suffice.
 
 
 ## 🔧 Prerequisites
