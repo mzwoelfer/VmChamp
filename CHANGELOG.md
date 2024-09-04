@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.3.0 - 2024-09-04
+FEATURE: Add autocompletion for BASH
+
+- Added: Bash autocompletion output
+- Update: README, how to add bashcompletion
+
+
 ## v0.2.2 - 2024-09-04
 UPDATE: Simplified README
 

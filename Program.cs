@@ -46,6 +46,21 @@ rootCommand.SetHandler((complete) =>
 
     AnsiConsole.WriteLine(zsh);
   }
+  else if (complete == "bash")
+  {
+    var bash = """
+    _vmchamp_bash_complete() {
+      COMPREPLY=()
+      local word=${COMP_WORDS[COMP_CWORD]}
+      local line=${COMP_LINE}
+      COMPREPLY=($(compgen -W '$(vmchamp '[complete]' "${line}")' -- ${word}))
+      return 0
+    }
+    complete -F _vmchamp_complete vmchamp
+    """;
+
+    AnsiConsole.WriteLine(bash);
+  }
 }, completionOption);
 
 var builder = new CommandLineBuilder(rootCommand).UseDefaults();
@@ -61,7 +76,7 @@ if (args.Length > 1 && args[0] == "[complete]")
   var parseResult = app.Parse(args[1]);
 
   var lastToken = parseResult.Tokens.LastOrDefault();
-  
+
   var completions = parseResult.GetCompletions()
     .Where(completion => completion.Label is not "-?" and not "-h" and not "/?" and not "/h")
     .ToArray();
