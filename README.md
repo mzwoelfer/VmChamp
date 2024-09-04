@@ -4,7 +4,7 @@
 
 <div align="center" width="100%">
     <h2>VmChamp</h2>
-    <p>Simple and fast creation of throwaway VMs on your local machine. Connect via SSH in just a few seconds.</p>
+    <p>Simple and fast creation of throwaway VMs on your local machine. Connect via SSH seconds.</p>
     <a target="_blank" href="https://github.com/zwoefler/VmChamp/actions"><img src="https://img.shields.io/github/actions/workflow/status/zwoefler/VmChamp/build.yml" /></a>
     <a target="_blank" href="https://github.com/wubbl0rz/VmChamp/stargazers"><img src="https://img.shields.io/github/stars/wubbl0rz/VmChamp" /></a>
     <a target="_blank" href="https://github.com/zwoefler/VmChamp/releases"><img src="https://img.shields.io/github/v/release/zwoefler/VmChamp?display_name=tag" /></a>
@@ -14,52 +14,67 @@
 ## ✨ Features
 - Quickly create and SSH into throwaway VMs.
 - Fast boot times using minimal cloud images.
-- On-demand downloads for Debian, Ubuntu, Arch, Fedora, CentOS, and Alma cloud images.
-- Shell completion.
+- On-demand downloads for `Debian`, `Ubuntu`, `Arch`, `Fedora`, `CentOS`, `Rocky` and `Alma` cloud images.
 - Customizable cloud-init commands.
-- Utilizes KVM, QEMU, and libvirt.
+- Utilizes `KVM`, `QEMU`, and `libvirt`.
 
 ## 🤔 Why?
-**VmChamp creates local VMs in seconds and provides SSH access**, bypassing the lengthy manual VM setup process.
+`VmChamp` creates local VMs `in seconds` and provides SSH access.
 
-Useful when Docker containers do not suffice, such as for:
-- loading/unloading kernel modules
-- testing grub configs
-- low-level networking tasks
-- testing/installing systemd unit files
-VMs are preferable.
+Bypassing a lengthy manual VM setup process.
+Especially useful when Containers do not suffice.
 
-
-## 🔧 Prerequisites
-- Your local Linux machine must support virtualization with KVM installed and working.
-- Ensure a default network interface is defined in libvirt, typically named "default."
-
-If your default interface is not started (https://github.com/wubbl0rz/VmChamp/issues/3) try:
-
+## 🚀 Usage
+RUN:
 ```BASH
-# use sudo if your user is not in the libvirt group
-virsh --connect qemu:///system net-start --network default
-virsh --connect qemu:///system net-autostart default
+vmchamp run mytestvm
+# or vmchamp run mytestvm --os debian11 --mem 256MB --disk 4GB
 ```
+
+Which leads to output:
+```BASH
+️👉 Creating VM: mytestvm
+💻 Using OS: Debian11
+📔 Memory size: 256 MiB
+💽 Disk size: 4 GiB
+
+...output omitted...
+
+⣷ Waiting for network...
+
+...output omitted...
+
+user@testvm:~$
+```
+
 
 ## 🛠️ Installation
-TESTED on: Ubuntu 22.04; Debian 12
+TESTED on: `Ubuntu 22.04`; `Debian 12`
 
-1. First, ensure that your system is up to date and install the required dependencies:
+**🔧 Prerequisites**:
+- Linux machine support `virtualization with KVM`
+- `KVM`, `QEMU` and `libvirt` installed
+- Ensure a default network interface is defined in libvirt, typically named "default."
+
+Check if your cpu supports virtualization:
 ```BASH
-sudo apt update
-sudo apt install qemu-kvm libvirt-daemon-system
+grep -Ec '(vmc|svm)' /proc/cpuinfo
+# If the output is greater than 0 your CPU supports hardware virtualization.
 ```
 
-2. Download and Install VmChamp:
 ```BASH
-# Download the latest version of VmChamp:
+# 1. First, ensure your system is up to date and install the required dependencies:
+sudo apt update
+sudo apt install qemu-kvm libvirt-daemon-system
+
+# 2. Download latest VmChamp:
 wget -qO- https://api.github.com/repos/zwoefler/VmChamp/releases/latest | grep "browser_download_url" | cut -d '"' -f 4 | wget -i - -O vmchamp
 
+# 3. Install VmChamp
 # Make the file executable:
 chmod +x vmchamp
 
-# Move VmChamp to your PATH:
+# Move vmchamp to your PATH:
 # Move to /usr/local/bin that's in your PATH.
 # Or rootless install ~/.local/bin:
 mkdir -p ~/.local/bin
@@ -68,93 +83,25 @@ mv vmchamp ~/.local/bin/
 # Ensure ~/.local/bin is in your PATH by adding the following to your ~/.bashrc or ~/.zshrc:
 export PATH="$PATH:$HOME/.local/bin"
 
-# Reload your shell configuration:
-source ~/.bashrc  # or source ~/.zshrc if you're using Zsh
-
-# Run VmChamp:
-vmchamp
+vmchamp # Displays help message
 ```
 
-
-## 🚀 Usage
-```BASH
-vmchamp run mytestvm
-# or VmChamp run mytestvm --os debian11 --mem 256MB --disk 4GB
-```
+**ISSUES WITH INSTALLATION:**
+If your default interface is not started (https://github.com/wubbl0rz/VmChamp/issues/3) try:
 
 ```BASH
-$ vmchamp run mytestvm
-️👉 Creating VM: mytestvm
-💻 Using OS: Debian12
-📔 Memory size: 512 MiB
-💽 Disk size: 8 GiB
-Download: https://cloud.debian.org/images/cloud/bookworm/latest/SHA512SUMS
-
-  100% 00:00:00
-
-Download: https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2
-
-  100% 00:00:00
-
-The checksum is good!
-
-⣷ Waiting for network...
-
-🚀 Your VM is ready.
-IP: 192.168.22.169
-Connect with 'VmChamp ssh user@192.168.22.169'
-Linux mytestvm 6.1.0-21-cloud-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03) x86_64
-
-The programs included with the Debian GNU/Linux system are free software;
-the exact distribution terms for each program are described in the
-individual files in /usr/share/doc/*/copyright.
-
-Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
-permitted by applicable law.
-```
-
-For shell completion put this in your ~.zshrc:
-
-```
-source <(VmChamp --completion zsh)
-```
-
-```BASH
-Description:
-
-Usage:
-  VmChamp [command] [options]
-
-Options:
-  --completion <completion>  generate shell completion. (zsh or bash)
-  --version                  Show version information
-  -?, -h, --help             Show help and usage information
-
-Commands:
-  run, start <name>              start a new VM [default: testvm]
-  clean, purge                   delete all vms and images
-  vmc, vmclean, vpurge           delete all vms without images
-  remove, rm <name>              removes a vm [default: testvm]
-  reboot, reset, restart <name>  force restarts a vm [default: testvm]
-  ssh <name>                     connect to vm via ssh [default: testvm]
-  list, ls, ps                   list all existing vms
-  images, os                     get a list of all available os images
+# use sudo if your user is not in the libvirt group
+virsh --connect qemu:///system net-start --network default
+virsh --connect qemu:///system net-autostart default
 ```
 
 ## 🏗️ Build
 
-To build **VmChamp**, use the the included bash script:
+To build **VmChamp** run:
 
 ```BASH
 ./build.sh <version> <output dir>
-```
-
-For example:
-
-```BASH
-./build.sh 1.2.3 ~/build/
+# ./build.sh 1.2.3 ~/build/
 ```
 
 Output dir defaults to `./build/`.
-
-

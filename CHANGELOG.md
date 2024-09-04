@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.2.2 - 2024-09-04
+UPDATE: Simplified README
+
+- Removed: Lengthy explanations and useless paragraphs
+
+
 ## v0.2.1 - 2024-09-04
 UPDATE: Added Fedora 38, 39 and 40 to VmChamp
 
