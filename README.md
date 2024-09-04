@@ -4,7 +4,7 @@
 
 <div align="center" width="100%">
     <h2>VmChamp</h2>
-    <p>Simple and fast creation of throwaway VMs on your local machine. Connect via SSH in just a few seconds.</p>
+    <p>Simple and fast creation of throwaway VMs on your local machine. Connect via SSH seconds.</p>
     <a target="_blank" href="https://github.com/zwoefler/VmChamp/actions"><img src="https://img.shields.io/github/actions/workflow/status/zwoefler/VmChamp/build.yml" /></a>
     <a target="_blank" href="https://github.com/wubbl0rz/VmChamp/stargazers"><img src="https://img.shields.io/github/stars/wubbl0rz/VmChamp" /></a>
     <a target="_blank" href="https://github.com/zwoefler/VmChamp/releases"><img src="https://img.shields.io/github/v/release/zwoefler/VmChamp?display_name=tag" /></a>
@@ -48,32 +48,29 @@ user@testvm:~$
 ```
 
 
-## 🔧 Prerequisites
-- Your local Linux machine must support virtualization with KVM installed and working.
+## 🛠️ Installation
+TESTED on: `Ubuntu 22.04`; `Debian 12`
+
+**🔧 Prerequisites**:
+- Linux machine support `virtualization with KVM`
+- `KVM`, `QEMU` and `libvirt` installed
 - Ensure a default network interface is defined in libvirt, typically named "default."
 
-If your default interface is not started (https://github.com/wubbl0rz/VmChamp/issues/3) try:
-
+Check if your cpu supports virtualization:
 ```BASH
-# use sudo if your user is not in the libvirt group
-virsh --connect qemu:///system net-start --network default
-virsh --connect qemu:///system net-autostart default
+grep -Ec '(vmc|svm)' /proc/cpuinfo
+# If the output is greater than 0 your CPU supports hardware virtualization.
 ```
 
-## 🛠️ Installation
-TESTED on: Ubuntu 22.04; Debian 12
-
-1. First, ensure that your system is up to date and install the required dependencies:
 ```BASH
+# 1. First, ensure your system is up to date and install the required dependencies:
 sudo apt update
 sudo apt install qemu-kvm libvirt-daemon-system
-```
 
-2. Download and Install VmChamp:
-```BASH
-# Download the latest version of VmChamp:
+# 2. Download latest VmChamp:
 wget -qO- https://api.github.com/repos/zwoefler/VmChamp/releases/latest | grep "browser_download_url" | cut -d '"' -f 4 | wget -i - -O vmchamp
 
+# 3. Install VmChamp
 # Make the file executable:
 chmod +x vmchamp
 
@@ -86,13 +83,21 @@ mv vmchamp ~/.local/bin/
 # Ensure ~/.local/bin is in your PATH by adding the following to your ~/.bashrc or ~/.zshrc:
 export PATH="$PATH:$HOME/.local/bin"
 
-# Reload your shell configuration:
 source ~/.bashrc  # or source ~/.zshrc if you're using Zsh
 
-# Run VmChamp:
 vmchamp
 ```
 
+**ISSUES WITH INSTALLATION:**
+If your default interface is not started (https://github.com/wubbl0rz/VmChamp/issues/3) try:
+
+```BASH
+# use sudo if your user is not in the libvirt group
+virsh --connect qemu:///system net-start --network default
+virsh --connect qemu:///system net-autostart default
+```
+
+---
 
 For shell completion put this in your ~.zshrc:
 
@@ -124,18 +129,11 @@ Commands:
 
 ## 🏗️ Build
 
-To build **VmChamp**, use the the included bash script:
+To build **VmChamp** run:
 
 ```BASH
 ./build.sh <version> <output dir>
-```
-
-For example:
-
-```BASH
-./build.sh 1.2.3 ~/build/
+# ./build.sh 1.2.3 ~/build/
 ```
 
 Output dir defaults to `./build/`.
-
-
