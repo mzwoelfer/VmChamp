@@ -56,7 +56,7 @@ rootCommand.SetHandler((complete) =>
       COMPREPLY=($(compgen -W '$(vmchamp '[complete]' "${line}")' -- ${word}))
       return 0
     }
-    complete -F _vmchamp_complete vmchamp
+    complete -F _vmchamp_bash_complete vmchamp
     """;
 
     AnsiConsole.WriteLine(bash);
