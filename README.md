@@ -74,7 +74,7 @@ wget -qO- https://api.github.com/repos/zwoefler/VmChamp/releases/latest | grep "
 # Make the file executable:
 chmod +x vmchamp
 
-# Move VmChamp to your PATH:
+# Move vmchamp to your PATH:
 # Move to /usr/local/bin that's in your PATH.
 # Or rootless install ~/.local/bin:
 mkdir -p ~/.local/bin
@@ -82,8 +82,6 @@ mv vmchamp ~/.local/bin/
 
 # Ensure ~/.local/bin is in your PATH by adding the following to your ~/.bashrc or ~/.zshrc:
 export PATH="$PATH:$HOME/.local/bin"
-
-source ~/.bashrc  # or source ~/.zshrc if you're using Zsh
 
 vmchamp
 ```
