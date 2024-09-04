@@ -139,7 +139,7 @@ public class DistroInfo
       Name = "Fedora40",
       Family = "Fedora",
       ImageName = "Fedora-Cloud-Base-Generic.x86_64-40-1.14.qcow2",
-      Url = "https://download.fedoraproject.org/pub/fedora/linux/releases/39/Cloud/x86_64/images/",
+      Url = "https://download.fedoraproject.org/pub/fedora/linux/releases/40/Cloud/x86_64/images/",
       Aliases = Array.Empty<string>(),
       ChecksumFile = "Fedora-Cloud-40-1.14-x86_64-CHECKSUM",
       ChecksumType = "sha256"
