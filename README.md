@@ -47,6 +47,16 @@ Which leads to output:
 user@testvm:~$
 ```
 
+### Add Shell completion
+Add the following to your `.bashrc` or `.zshrc` file
+```BASH
+# For BASH
+source <(vmchamp --completion bash)
+
+# For ZSH
+source <(vmchamp --completion zsh)
+```
+
 
 ## 🛠️ Installation
 TESTED on: `Ubuntu 22.04`; `Debian 12`
