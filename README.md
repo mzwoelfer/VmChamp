@@ -24,6 +24,29 @@
 Bypassing a lengthy manual VM setup process.
 Especially useful when Containers do not suffice.
 
+## 🚀 Usage
+RUN:
+```BASH
+vmchamp run mytestvm
+# or vmchamp run mytestvm --os debian11 --mem 256MB --disk 4GB
+```
+
+Which leads to output:
+```BASH
+️👉 Creating VM: mytestvm
+💻 Using OS: Debian11
+📔 Memory size: 256 MiB
+💽 Disk size: 4 GiB
+
+...output omitted...
+
+⣷ Waiting for network...
+
+...output omitted...
+
+user@testvm:~$
+```
+
 
 ## 🔧 Prerequisites
 - Your local Linux machine must support virtualization with KVM installed and working.
@@ -70,43 +93,6 @@ source ~/.bashrc  # or source ~/.zshrc if you're using Zsh
 vmchamp
 ```
 
-
-## 🚀 Usage
-```BASH
-vmchamp run mytestvm
-# or VmChamp run mytestvm --os debian11 --mem 256MB --disk 4GB
-```
-
-```BASH
-$ vmchamp run mytestvm
-️👉 Creating VM: mytestvm
-💻 Using OS: Debian12
-📔 Memory size: 512 MiB
-💽 Disk size: 8 GiB
-Download: https://cloud.debian.org/images/cloud/bookworm/latest/SHA512SUMS
-
-  100% 00:00:00
-
-Download: https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2
-
-  100% 00:00:00
-
-The checksum is good!
-
-⣷ Waiting for network...
-
-🚀 Your VM is ready.
-IP: 192.168.22.169
-Connect with 'VmChamp ssh user@192.168.22.169'
-Linux mytestvm 6.1.0-21-cloud-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03) x86_64
-
-The programs included with the Debian GNU/Linux system are free software;
-the exact distribution terms for each program are described in the
-individual files in /usr/share/doc/*/copyright.
-
-Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
-permitted by applicable law.
-```
 
 For shell completion put this in your ~.zshrc:
 
