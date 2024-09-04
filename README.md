@@ -83,7 +83,7 @@ mv vmchamp ~/.local/bin/
 # Ensure ~/.local/bin is in your PATH by adding the following to your ~/.bashrc or ~/.zshrc:
 export PATH="$PATH:$HOME/.local/bin"
 
-vmchamp
+vmchamp # Displays help message
 ```
 
 **ISSUES WITH INSTALLATION:**
@@ -93,36 +93,6 @@ If your default interface is not started (https://github.com/wubbl0rz/VmChamp/is
 # use sudo if your user is not in the libvirt group
 virsh --connect qemu:///system net-start --network default
 virsh --connect qemu:///system net-autostart default
-```
-
----
-
-For shell completion put this in your ~.zshrc:
-
-```
-source <(VmChamp --completion zsh)
-```
-
-```BASH
-Description:
-
-Usage:
-  VmChamp [command] [options]
-
-Options:
-  --completion <completion>  generate shell completion. (zsh or bash)
-  --version                  Show version information
-  -?, -h, --help             Show help and usage information
-
-Commands:
-  run, start <name>              start a new VM [default: testvm]
-  clean, purge                   delete all vms and images
-  vmc, vmclean, vpurge           delete all vms without images
-  remove, rm <name>              removes a vm [default: testvm]
-  reboot, reset, restart <name>  force restarts a vm [default: testvm]
-  ssh <name>                     connect to vm via ssh [default: testvm]
-  list, ls, ps                   list all existing vms
-  images, os                     get a list of all available os images
 ```
 
 ## 🏗️ Build
