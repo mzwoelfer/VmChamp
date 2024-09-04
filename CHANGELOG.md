@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.3.1 - 2024-09-04
+FEATURE: Added Docs and FAQ
+
+- Added: FAQ Section
+- Moved: Detailed installation to docs
+- Simplified: README is now shorter
+
+
 ## v0.3.0 - 2024-09-04
 FEATURE: Add autocompletion for BASH
 
