@@ -8,16 +8,17 @@ TESTED on: `Ubuntu 22.04`; `Debian 12`
 
 
 ### 🚀 INSTALLATION:
-1. Check if your cpu supports virtualization:
-```BASH
-grep -Ec '(vmc|svm)' /proc/cpuinfo
-# If the output is greater than 0 your CPU supports hardware virtualization.
-```
-
-2. First, ensure your system is up to date and install the required dependencies:
+1. First, ensure your system is up to date and install the required dependencies:
 ```BASH
 sudo apt update
 sudo apt install qemu-kvm libvirt-daemon-system
+```
+
+2. Check if your system supports virtualization:
+KVM requires Intel processor with Intel VT-x and Intel 64 extensions or an AMD processor with the AMD-V and the AMD64 extensions. 
+```BASH
+virt-host-validate
+# Must pass all validation items to work as a KVM host
 ```
 
 3. Download latest VmChamp:
