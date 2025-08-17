@@ -8,7 +8,7 @@ public class DistroInfo
     {
       Name = "Debian13",
       Family = "Debian",
-      ImageName = "debian-13-generic-arm64.qcow2",
+      ImageName = "debian-13-generic-amd64.qcow2",
       Url = "https://cloud.debian.org/images/cloud/trixie/latest/",
       Aliases = new[] { "Trixie" },
       ChecksumFile = "SHA512SUMS",
