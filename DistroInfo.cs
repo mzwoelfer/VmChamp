@@ -166,6 +166,16 @@ public class DistroInfo
     },
     new()
     {
+      Name = "Fedora42",
+      Family = "Fedora",
+      ImageName = "Fedora-Cloud-Base-Generic-42-1.1.x86_64.qcow2",
+      Url = "https://download.fedoraproject.org/pub/fedora/linux/releases/42/Cloud/x86_64/images/",
+      Aliases = Array.Empty<string>(),
+      ChecksumFile = "Fedora-Cloud-42-1.1-x86_64-CHECKSUM",
+      ChecksumType = "sha256"
+    },
+    new()
+    {
       Name = "CentOS7",
       Family = "RHEL",
       ImageName = "CentOS-7-x86_64-GenericCloud.qcow2",
