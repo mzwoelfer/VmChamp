@@ -206,6 +206,16 @@ public class DistroInfo
     },
     new()
     {
+      Name = "Rocky10",
+      Family = "RHEL",
+      ImageName = "Rocky-10-GenericCloud-Base-10.0-20250609.1.x86_64",
+      Url = "https://download.rockylinux.org/pub/rocky/10/images/x86_64/",
+      Aliases = Array.Empty<string>(),
+      ChecksumFile = "CHECKSUM",
+      ChecksumType = "sha256"
+    },
+    new()
+    {
       Name = "Alma8",
       Family = "RHEL",
       ImageName = "AlmaLinux-8-GenericCloud-latest.x86_64.qcow2",
