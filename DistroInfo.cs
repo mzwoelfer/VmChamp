@@ -6,6 +6,16 @@ public class DistroInfo
   {
     new()
     {
+      Name = "Debian13",
+      Family = "Debian",
+      ImageName = "debian-13-generic-arm64.qcow2",
+      Url = "https://cloud.debian.org/images/cloud/trixie/latest/",
+      Aliases = new[] { "Trixie" },
+      ChecksumFile = "SHA512SUMS",
+      ChecksumType = "sha512"
+    },
+    new()
+    {
       Name = "Debian12",
       Family = "Debian",
       ImageName = "debian-12-genericcloud-amd64-daily.qcow2",
@@ -156,6 +166,16 @@ public class DistroInfo
     },
     new()
     {
+      Name = "Fedora42",
+      Family = "Fedora",
+      ImageName = "Fedora-Cloud-Base-Generic-42-1.1.x86_64.qcow2",
+      Url = "https://download.fedoraproject.org/pub/fedora/linux/releases/42/Cloud/x86_64/images/",
+      Aliases = Array.Empty<string>(),
+      ChecksumFile = "Fedora-Cloud-42-1.1-x86_64-CHECKSUM",
+      ChecksumType = "sha256"
+    },
+    new()
+    {
       Name = "CentOS7",
       Family = "RHEL",
       ImageName = "CentOS-7-x86_64-GenericCloud.qcow2",
@@ -180,6 +200,16 @@ public class DistroInfo
       Family = "RHEL",
       ImageName = "Rocky-9-GenericCloud.latest.x86_64.qcow2",
       Url = "https://download.rockylinux.org/pub/rocky/9/images/x86_64/",
+      Aliases = Array.Empty<string>(),
+      ChecksumFile = "CHECKSUM",
+      ChecksumType = "sha256"
+    },
+    new()
+    {
+      Name = "Rocky10",
+      Family = "RHEL",
+      ImageName = "Rocky-10-GenericCloud-Base-10.0-20250609.1.x86_64",
+      Url = "https://download.rockylinux.org/pub/rocky/10/images/x86_64/",
       Aliases = Array.Empty<string>(),
       ChecksumFile = "CHECKSUM",
       ChecksumType = "sha256"
