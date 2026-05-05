@@ -139,8 +139,8 @@ public class RunCommand : Command
           distro = DistroInfo.CreateLocal(localImageFileInfo);
         }
 
-        var diskSize = ByteSize.Parse(disk);
-        var memSize = ByteSize.Parse(mem);
+        var diskSize = ByteSize.Parse(Helper.NormalizeSizeString(disk));
+        var memSize = ByteSize.Parse(Helper.NormalizeSizeString(mem));
 
         AnsiConsole.MarkupLine($"️👉 Creating VM: {vmName}");
         AnsiConsole.MarkupLine($"💻 Using OS: {distro.Name}");

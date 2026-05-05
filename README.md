@@ -30,6 +30,9 @@ RUN:
 vmchamp run mytestvm
 # or for more options
 vmchamp run mytestvm --os debian11 --mem 256MB --disk 4GB
+
+# Plain numbers default to GiB
+vmchamp run mytestvm --mem 3.5 --disk 20
 ```
 
 Which leads to output:

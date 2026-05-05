@@ -133,6 +133,15 @@ public class Helper
       .Select(Path.GetFileName)
       .ToArray();
 
+  /// <summary>
+  /// If the value is a plain number (e.g. "3.5"), appends "GB" so ByteSize can parse it.
+  /// </summary>
+  public static string NormalizeSizeString(string value) =>
+    double.TryParse(value, System.Globalization.NumberStyles.Any,
+      System.Globalization.CultureInfo.InvariantCulture, out _)
+      ? value + "GiB"
+      : value;
+
   public static string GetUserFromIso(string vmDir)
     {
         var isoPath = Path.Combine(vmDir, "cloudInit.iso");
