@@ -1,7 +1,7 @@
-# Using Local Images with VmChamp
+# Use Local Images with VmChamp
 
-VmChamp supports running your own custom `.qcow2` images via the `--local-image` flag.
-This is useful when you need a pre-configured VM that isn't available as a standard cloud image — for example, one with specific packages, configurations, or a custom kernel.
+VmChamp can run your custom `.qcow2` images via the `--local-image` flag.
+This is useful when you need a pre-configured VM with specific packages, configurations, or a custom kernel.
 
 ## Required Tools
 
@@ -24,7 +24,7 @@ Install on Fedora/RHEL:
 sudo dnf install libguestfs-tools
 ```
 
-## Building a Custom Image
+## Build a Custom Image
 
 The general workflow is:
 
@@ -34,6 +34,8 @@ The general workflow is:
 4. Run it with VmChamp.
 
 ### Step-by-step example
+
+> Expects a debian12 image in your local directory in `.qcow2` format.
 
 ```shell
 # Mount the image to /mnt
@@ -47,7 +49,7 @@ cp /etc/resolv.conf /mnt/etc/resolv.conf
 chroot /mnt apt-get update
 chroot /mnt apt-get install -y wireguard-tools htop git vim
 
-# Run upgrades
+# Upgrade packages
 chroot /mnt apt-get upgrade -y
 
 # Restore original resolv.conf
@@ -74,12 +76,4 @@ You can combine it with any other `run` flags:
 vmchamp run myvm --local-image /path/to/debian12custom.qcow2 --cpu 2 --mem 2048
 ```
 
-VmChamp will copy the image into `~/VmChamp/<vmname>/` and boot it directly — no download needed.
-
-## Prerequisites
-
-Make sure the `virbr0` bridge is set up before running any VM. If it isn't, VmChamp will detect this and offer to create it automatically. You can also create `/etc/qemu/bridge.conf` manually with:
-
-```
-allow virbr0
-```
+VmChamp will copy the image into `~/VmChamp/<vmname>/` and boot it.
