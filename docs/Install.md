@@ -23,7 +23,7 @@ virt-host-validate
 
 3. Download latest VmChamp:
 ```BASH
-wget -qO- https://api.github.com/repos/zwoefler/VmChamp/releases/latest | grep "browser_download_url" | cut -d '"' -f 4 | wget -i - -O vmchamp
+wget -qO- https://api.github.com/repos/mzwoelfer/VmChamp/releases/latest | grep "browser_download_url" | cut -d '"' -f 4 | wget -i - -O vmchamp
 ```
 4. Install VmChamp
 ```BASH
