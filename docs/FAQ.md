@@ -37,3 +37,11 @@ Replace `user` with the actual username in the VM (default: `user`) and `MySecur
 
 
 > **Note:** Avoid using simple or reused passwords in VMs that are network-accessible!
+
+### Why the VM disk larger than the value I passed to `--disk`?
+
+If the value you pass to `--disk` is smaller than the cloud images required minimum disk space, VmChamp will silently expand the disk to meet the image's requirement.
+
+For example, the `Alma 9` cloud image requires `10 GB`, so `--disk 4GB` will still result in a 10 GB disk.
+
+This is expected behaviour, the `--disk` value is effectively a lower bound.
