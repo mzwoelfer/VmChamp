@@ -23,3 +23,17 @@ On first run, the folder `~/VmChamp/default` is created.
 
 ### How does VmChamp create the SSH connection?
 On creation of the VM **every** `.pub` key inside your  `~/.ssh` directory is added to the `authorized_keys` file in the VM.
+
+### How to set a password for the VM user?
+
+If you need a password use the `--cmd` option to set it after the VM boots:
+```shell
+vmchamp run --cmd 'echo "user:MySecurePassword" | sudo chpasswd'
+```
+
+Replace `user` with the actual username in the VM (default: `user`) and `MySecurePassword` with your desired password.
+
+> `VmChamp` does not have a `--password` flag. Passwords are intentionally omitted in favour of cloud-init SSH key injection (see above). 
+
+
+> **Note:** Avoid using simple or reused passwords in VMs that are network-accessible!
