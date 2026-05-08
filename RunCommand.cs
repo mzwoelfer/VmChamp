@@ -175,11 +175,11 @@ public class RunCommand : Command
           targetOsImage = localImagePath;
         }
 
-        Helper.ResizeImage(targetOsImage, diskSize.Bytes);
+        Helper.ResizeImage(targetOsImage, (long)diskSize.Bytes);
 
         var initImage = _imager.CreateImage(vmName, user, new DirectoryInfo(vmDir), customCmd ?? "");
 
-        await this.CreateVm(vmName, user, new FileInfo(targetOsImage), initImage, background, memSize.Bytes, cpuCount);
+        await this.CreateVm(vmName, user, new FileInfo(targetOsImage), initImage, background, (long)memSize.Bytes, cpuCount);
       });
   }
 
@@ -192,12 +192,12 @@ public class RunCommand : Command
     FileInfo osImage,
     FileInfo initImage,
     bool background,
-    double memSize,
+    long memSizeInBytes,
     int cpuCount)
   {
     using var libvirtConnection = LibvirtConnection.CreateForSession();
 
-    var xml = this.GenXml(vmName, osImage.FullName, initImage.FullName, memSize, cpuCount);
+    var xml = this.GenXml(vmName, osImage.FullName, initImage.FullName, memSizeInBytes, cpuCount);
 
     var vmId = Interop.virDomainCreateXML(libvirtConnection.NativePtr, xml, 0);
 
@@ -251,7 +251,7 @@ public class RunCommand : Command
     Interop.DestroyVm(vmId, vmName, vmDir);
   }
 
-  private string GenXml(string vmName, string diskImage, string initImage, double memSizeInBytes, int cpuCount)
+  private string GenXml(string vmName, string diskImage, string initImage, long memSizeInBytes, int cpuCount)
   {
     var guid = Guid.NewGuid();
     var xml = $"""
