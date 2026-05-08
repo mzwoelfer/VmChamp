@@ -117,11 +117,11 @@ public class Helper
     return true;
   }
 
-  public static void ResizeImage(string file, double size)
+  public static void ResizeImage(string file, long sizeInBytes)
   {
     var startInfo = new ProcessStartInfo("qemu-img")
     {
-      Arguments = $"resize {file} {size}",
+      Arguments = $"resize {file} {sizeInBytes}",
       RedirectStandardOutput = true
     };
 
