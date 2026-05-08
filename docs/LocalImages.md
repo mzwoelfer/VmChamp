@@ -73,7 +73,7 @@ vmchamp run --local-image /path/to/debian12custom.qcow2
 You can combine it with any other `run` flags:
 
 ```shell
-vmchamp run myvm --local-image /path/to/debian12custom.qcow2 --cpu 2 --mem 2048
+vmchamp run myvm --local-image /path/to/debian12custom.qcow2 --cpu 2 --mem 2
 ```
 
 VmChamp will copy the image into `~/VmChamp/<vmname>/` and boot it.

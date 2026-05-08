@@ -15,6 +15,7 @@
 - Quickly create and SSH into throwaway VMs.
 - Fast boot times using minimal cloud images.
 - On-demand downloads for `Debian`, `Ubuntu`, `Arch`, `Fedora`, `CentOS`, `Rocky` and `Alma` cloud images.
+- Automatically injects your `~/.ssh/*.pub` keys into the VM's `authorized_keys`. for passwordless ssh access.
 - Shell completion
 - Utilizes `KVM`, `QEMU`, and `libvirt`.
 
@@ -29,18 +30,22 @@ RUN:
 ```BASH
 vmchamp run mytestvm
 # or for more options
-vmchamp run mytestvm --os debian11 --mem 256MB --disk 4GB
+vmchamp run mytestvm --os debian11 --mem 512MiB --disk 20GiB
+```
 
-# Plain numbers default to GiB
-vmchamp run mytestvm --mem 3.5 --disk 20
+> **Defaults:** OS = `Debian13` · Memory = `512MiB` · Disk = `8GiB` · CPUs = `1` · User = `user`
+>
+> Plain numbers for `--mem` and `--disk` are interpreted as **GiB** (e.g. `--disk 20` → 20 GiB, `--mem 0.5` → 0.5 GiB).
+```BASH
+vmchamp run mytestvm --os debian11 --mem 0.512 --disk 20
 ```
 
 Which leads to output:
 ```BASH
 ️👉 Creating VM: mytestvm
 💻 Using OS: Debian11
-📔 Memory size: 256 MiB
-💽 Disk size: 4 GiB
+📔 Memory size: 512 MiB
+💽 Disk size: 20 GiB
 
 ...output omitted...
 
@@ -50,6 +55,16 @@ Which leads to output:
 
 user@testvm:~$
 ```
+
+## 🔑 How it works - Default VM User & SSH Access
+
+Every VM is provisioned via **cloud-init** ([IsoImager.cs](IsoImager.cs)) with:
+
+- A user named **`user`** (override with `--user`).
+- All `*.pub` files found in your **`~/.ssh/`** directory are copied into the VM's `authorized_keys` — SSH works immediately without a password.
+- The user has **passwordless sudo** (`ALL=(ALL) NOPASSWD:ALL`).
+
+> No SSH password is set by default. See the [FAQ](docs/FAQ.md) for how to set one if needed.
 
 ### Add Shell completion
 Add the following to your `.bashrc` or `.zshrc` file
