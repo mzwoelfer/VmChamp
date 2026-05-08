@@ -23,6 +23,7 @@ It supports various Linux distributions and utilizes `KVM` (Kernel-based Virtual
 
 - **VM Creation:** Users initiate VMs and can customize the settings (OS, Memory, CPUs, etc.).
 - **Storage:** All VMs are stored at `~/VmChamp`, which is created upon first using the tool.
+- **Session:** VMs run in the **QEMU/KVM user session** (`qemu:///session`). To view them in Virtual Machine Manager, add a connection via **File → Add Connection → QEMU/KVM user session**.
 
 
 ## Find OS Versions and Cloud images

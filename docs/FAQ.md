@@ -49,3 +49,18 @@ If the value you pass to `--disk` is smaller than the cloud images required mini
 For example, the `Alma 9` cloud image requires `10 GB`, so `--disk 4GB` will still result in a 10 GB disk.
 
 This is expected behaviour, the `--disk` value is effectively a lower bound.
+
+### How can I see my VMs in Virtual Machine Manager (virt-manager)?
+
+VmChamp starts VMs in the **QEMU/KVM user session** (`qemu:///session`), not the system session (`qemu:///system`).
+By default, Virtual Machine Manager connects to the system session and won't show your VMs.
+
+To add the user session:
+1. Open Virtual Machine Manager.
+2. Go to **File → Add Connection**.
+3. Set **Hypervisor** to `QEMU/KVM user session`.
+4. Click **Connect**.
+
+Your VmChamp VMs will now appear in the list.
+
+> **Console alternative:** `virsh --connect qemu:///session list --all`
