@@ -134,7 +134,7 @@ public class Helper
       .ToArray();
 
   /// <summary>
-  /// If the value is a plain number (e.g. "3.5"), appends "GB" so ByteSize can parse it.
+  /// If the value is a plain number (e.g. "3.5"), appends "GiB" so ByteSize can parse it.
   /// </summary>
   public static string NormalizeSizeString(string value) =>
     double.TryParse(value, System.Globalization.NumberStyles.Any,
