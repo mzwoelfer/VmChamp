@@ -22,7 +22,11 @@ This sets up a network bridge that connects the virtual machines to the physical
 On first run, the folder `~/VmChamp/default` is created.
 
 ### How does VmChamp create the SSH connection?
-On creation of the VM **every** `.pub` key inside your  `~/.ssh` directory is added to the `authorized_keys` file in the VM.
+On creation of the VM **every** `.pub` key inside your `~/.ssh` directory is added to the `authorized_keys` file in the VM.
+
+The default user is **`user`** and has **passwordless sudo** (`ALL=(ALL) NOPASSWD:ALL`). This is configured via cloud-init in [IsoImager.cs](../IsoImager.cs).
+
+You can override the username with `--user <name>` when running `vmchamp run`.
 
 ### How to set a password for the VM user?
 
@@ -38,10 +42,25 @@ Replace `user` with the actual username in the VM (default: `user`) and `MySecur
 
 > **Note:** Avoid using simple or reused passwords in VMs that are network-accessible!
 
-### Why the VM disk larger than the value I passed to `--disk`?
+### Why is the VM disk larger than the value I passed to `--disk`?
 
 If the value you pass to `--disk` is smaller than the cloud images required minimum disk space, VmChamp will silently expand the disk to meet the image's requirement.
 
 For example, the `Alma 9` cloud image requires `10 GB`, so `--disk 4GB` will still result in a 10 GB disk.
 
 This is expected behaviour, the `--disk` value is effectively a lower bound.
+
+### How can I see my VMs in Virtual Machine Manager (virt-manager)?
+
+VmChamp starts VMs in the **QEMU/KVM user session** (`qemu:///session`), not the system session (`qemu:///system`).
+By default, Virtual Machine Manager connects to the system session and won't show your VMs.
+
+To add the user session:
+1. Open Virtual Machine Manager.
+2. Go to **File → Add Connection**.
+3. Set **Hypervisor** to `QEMU/KVM user session`.
+4. Click **Connect**.
+
+Your VmChamp VMs will now appear in the list.
+
+> **Console alternative:** `virsh --connect qemu:///session list --all`
