@@ -96,6 +96,16 @@ public class DistroInfo
     },
     new()
     {
+      Name = "Ubuntu2604",
+      Family = "Ubuntu",
+      ImageName = "resolute-server-cloudimg-amd64.img",
+      Url = "https://cloud-images.ubuntu.com/resolute/current/",
+      Aliases = new[] { "Resolute Raccoon", "Resolute" },
+      ChecksumFile = "SHA256SUMS",
+      ChecksumType = "sha256"
+    },
+    new()
+    {
       Name = "Arch",
       Family = "Arch",
       ImageName = "Arch-Linux-x86_64-cloudimg.qcow2",
@@ -206,6 +216,16 @@ public class DistroInfo
     },
     new()
     {
+      Name = "CentOSStream10",
+      Family = "RHEL",
+      ImageName = "CentOS-Stream-GenericCloud-10-latest.x86_64.qcow2",
+      Url = "https://cloud.centos.org/centos/10-stream/x86_64/images/",
+      Aliases = Array.Empty<string>(),
+      ChecksumFile = "CHECKSUM",
+      ChecksumType = "sha256"
+    },
+    new()
+    {
       Name = "Rocky8",
       Family = "RHEL",
       ImageName = "Rocky-8-GenericCloud.latest.x86_64.qcow2",
@@ -250,6 +270,16 @@ public class DistroInfo
       Family = "RHEL",
       ImageName = "AlmaLinux-9-GenericCloud-latest.x86_64.qcow2",
       Url = "https://repo.almalinux.org/almalinux/9/cloud/x86_64/images/",
+      Aliases = Array.Empty<string>(),
+      ChecksumFile = "CHECKSUM",
+      ChecksumType = "sha256"
+    },
+    new()
+    {
+      Name = "Alma10",
+      Family = "RHEL",
+      ImageName = "AlmaLinux-10-GenericCloud-latest.x86_64.qcow2",
+      Url = "https://repo.almalinux.org/almalinux/10/cloud/x86_64/images/",
       Aliases = Array.Empty<string>(),
       ChecksumFile = "CHECKSUM",
       ChecksumType = "sha256"
